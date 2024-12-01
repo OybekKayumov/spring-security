@@ -23,7 +23,7 @@ public class SecurityConfiguration {
 						req.requestMatchers("/", "/home").permitAll()
 						.requestMatchers("/public/**").hasRole("USER")
 						.requestMatchers("/admin/**").hasRole("ADMIN")
-						.anyRequest().authenticated()
+						//.anyRequest().authenticated()
 		).formLogin(Customizer.withDefaults());
 
 		return http.build();
@@ -31,14 +31,14 @@ public class SecurityConfiguration {
 
 	@Bean
 	public UserDetailsService userDetailsService() {
-		UserDetails user = User.withDefaultPasswordEncoder()
+		UserDetails user = User.builder()
 						.username("user")
 						//.password("pwd")
 						.password(passwordEncoder().encode("user"))
 						.roles("USER")
 						.build();
 
-		UserDetails admin = User.withDefaultPasswordEncoder()
+		UserDetails admin = User.builder()
 						.username("admin")
 						//.password("pwd")
 						.password(passwordEncoder().encode("admin"))
